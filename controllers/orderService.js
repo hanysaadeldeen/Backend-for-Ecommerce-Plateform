@@ -145,10 +145,11 @@ exports.checkoutSession = asyncHandler(async (req, res, next) => {
     ],
     mode: "payment",
     success_url: `https://master--melodious-starship-c29078.netlify.app/#/user/order`,
-    // success_url: `${req.protocol}://${req.get("host")}/user/order`,
-    // success_url: `http://localhost:3000/user/allorders`,
-    cancel_url: `https://master--melodious-starship-c29078.netlify.app/#/CartPage`,
-    // cancel_url: `${req.protocol}://${req.get("host")}/CartPage`,
+    // success_url: `${req.protocol}://${req.get("host")}/order`,
+    // success_url: `https://97681zz8-8000.uks1.devtunnels.ms/user/order`,
+    // cancel_url: `https://master--melodious-starship-c29078.netlify.app/#/CartPage`,
+
+    cancel_url: `${req.protocol}://${req.get("host")}/CartPage`,
     // cancel_url: `http://localhost:3000/cart`,
     customer_email: req.user.email,
     client_reference_id: req.params.cartId,
@@ -167,7 +168,8 @@ exports.checkoutSession = asyncHandler(async (req, res, next) => {
 const createOrderCheckout = async (session) => {
   // 1) Get needed data from session
   const cartId = session.client_reference_id;
-  const checkoutAmount = session.display_items[0].amount / 100;
+  const checkoutAmount = session.amount_total / 100;
+  console.log("webhook");
   const shippingAddress = session.metadata;
 
   // 2) Get Cart and User
